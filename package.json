@@ -8,7 +8,7 @@
     "parcel-bundler": "^1.12.5"
   },
   "scripts": {
-    "dev": "parcel *.html"
+    "dev": "yarn && parcel *.html"
   },
   "devDependencies": {
     "sass": "^1.35.2"
