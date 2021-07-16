@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  main {
+    display: flex;
+    gap: 0.5em;
+    padding: 0.5rem;
+  }
+  
+  .header-hero-list {
+    width: 600px;
+    padding: 0.5rem;
+    background-color:green;
+    border-radius: 10px;
+  }
+  
+  h1 {
+    text-align: center;
+    padding-bottom: 0.5rem;
+  }
+  
+  hr {
+    width: 550px;
+    margin: 10px 0;
+  }
+  
+  .hero, .hero-header {
+    display: grid;
+    grid-template-columns: repeat(5, 100px);
+    text-align: center;
+    padding: 0.5rem;
+    transition: all 0.2s;
+  }
+  
+  .hero-header {
+    font-weight: bold;
+  }
+  
+  .hero {
+    cursor: pointer;
+  }
+  
+  .hero:hover {
+    background-color:white;
+    border-radius: 50px;
+  }
+  
+  .hero:active {
+    background-color: yellow;
+  }
+  
+  .form-wrapper {
+    display: grid;
+    gap: 0.5em;
+    
+    .field {
+      display: flex;
+      margin-bottom: 0.5rem;
+    }
+    label {
+      width: 70px;
+    }
+  }
+  
+  .hero-profile {
+    width: 600px;;
+    background-color:red;
+    padding: 0.5rem;
+    border-radius: 10px;
+    text-align: center;
+  
+    img {
+      width: 200px;
+      border-radius:50%;
+    }
+  }
+  
+  .status-profile {
+    display: grid;
+    grid-template-columns: 50px 50px;
+    justify-content: center;
+    padding-top: 0.5rem;
+  }
+  
+  .btn-update-delete {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.5rem;
+  
+    button {
+      width: 60px;
+      height: 30px;
+    }
+  }
+  
+  #form-hero {
+    background-color:blue;
+  }
