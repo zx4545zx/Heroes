@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
     method: "GET",
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Basic a21pdGw6YXlzdXQ3Z3c='
+      'Authorization': process.env.API_CREDENTIAL
     }
   }).then(resp => resp.json())
     .then(data => {
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     method: "GET",
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Basic a21pdGw6YXlzdXQ3Z3c='
+      'Authorization': process.env.API_CREDENTIAL
     }
   }).then(resp => resp.json())
     .then(data => {
@@ -63,9 +63,10 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch(createHeroUrl, {
       method: "POST",
       headers: {
-        'Authorization': 'Basic a21pdGw6YXlzdXQ3Z3c=',
+        'Authorization': process.env.API_CREDENTIAL
       },
       body: formData,
+      mode:'cors'
     }).then(resp => resp.json())
       .then(data => {
         insertNewHero(listHeroesDom, data)
