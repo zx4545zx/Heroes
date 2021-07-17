@@ -1,62 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heroes</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heroes</title>
 </head>
+
 <body>
-    <main>
-        <div class="header-hero-list">
-          <h1>Heroes</h1>
-          <hr>
-          <div id="list-heroes" class="list-heroes">
+  <main>
+    <div class="header-hero-list">
+      <h1>Heroes</h1>
+      <hr>
+      <div id="list-heroes" class="list-heroes">
+      </div>
+    </div>
+
+    <div class="form-wrapper">
+      <div class="hero-card">
+        <div class="hero-profile">
+          <div class="level-profile">LV1</div>
+          <img class="img-profile" src="#" alt="#">
+          <div class="name-profile">Lisa</div>
+          <div class="job-profile">mage</div>
+
+          <div class="status-profile">
+            <label for="hp-txt">HP</label>
+            <div class="hp-profile">100</div>
+            <label for="mp-txt">MP</label>
+            <div class="mp-profile">99</div>
           </div>
         </div>
-    
-        <div class="form-wrapper">
-          <div class="hero-profile">
-            <div class="level-profile">LV1</div>
-            <img class="img-profile" src="#" alt="#">
-            <div class="name-profile">Lisa</div>
-            <div class="job-profile">mage</div>
-    
-            <div class="status-profile">
-              <label for="hp-txt">HP</label>
-              <div class="hp-profile">100</div>
-              <label for="mp-txt">MP</label>
-              <div class="mp-profile">99</div>
-            </div>
-    
-            <div class="btn-update-delete">
-              <button class="btn-update">update</button>
-              <button class="btn-delete">delete</button>
-            </div>
-          </div>
-    
-          <div id="form-hero">
-            <h2>Create your hero</h2>
-            <div class="field">
-              <label for="name">Name</label>
-              <input type="text" id="name" name="hero[name]" />
-            </div>
-            <div class="field">
-              <label for="job">Job</label>
-              <div id="job-wrapper"></div>
-            </div>
-            <div class="field">
-              <label for="image">Img</label>
-              <input type="file" id="image" name="hero[image]" />
-            </div>
-    
-            <div class="field">
-              <input id="btn-submit-hero" type="submit" />
-            </div>
-          </div>
+
+        <div class="btn-update-delete">
+          <button class="btn-update">update</button>
+          <button class="btn-delete">delete</button>
         </div>
-      </main>
-    
-      <script type="text/javascript" src="index.js"></script>
+      </div>
+
+      <div id="form-hero">
+        <h2>Create your hero</h2>
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="hero[name]"/>
+        </div>
+        <div class="field">
+          <label for="job">Job</label>
+          <div id="job-wrapper"></div>
+        </div>
+        <div class="field">
+          <label for="image">Img</label>
+          <input type="file" id="image" name="hero[image]" />
+        </div>
+
+        <div class="field">
+          <input id="btn-submit-hero" type="submit" />
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="text/javascript" src="index.js"></script>
 </body>
+
 </html>
