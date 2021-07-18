@@ -86,8 +86,27 @@ document.addEventListener('DOMContentLoaded', function () {
           .then(data => {
             let htmlShowHeroDom = document.getElementById('hero-profile')
             buildHeroProfile(htmlShowHeroDom, data)
+            deleteHero(url, data)
           })
       })
+    })
+  }
+
+  // Delete Hero Profile
+  function deleteHero(url, data) {
+    let delHero = document.querySelector('.btn-delete')
+    delHero.addEventListener('click', function () {
+      let id = data.id
+      fetch(url + "/" + id, {
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': process.env.API_CREDENTIAL
+        },
+      }).then(resp => resp.json())
+        .then(data => {
+          console.log(data);
+        })
     })
   }
 
