@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
   let formHero = document.querySelector("#form-hero")
   let btnSubmitHero = document.querySelector('#btn-submit-hero')
 
-  let idHero = document.querySelector('.hero'); // !! Error Test
-  let formWrapper = document.querySelector('.form-wrapper');
+  // let idHero = document.querySelector('.hero'); // !! Error Test
+  // let formWrapper = document.querySelector('.form-wrapper');
 
   if (listHeroesDom == null) { return }
   let heroUrl = process.env.API_URL + "/heroes"
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
       addHeaderTitleToHeroesList(headerHero) //Head HeroList
       buildHeroDom(listHeroesDom, data) //Hero List
 
-      idHero.onclick = createHero(formWrapper,data,idHero); // !! Error Test
+      // idHero.onclick = createHero(formWrapper,data,idHero); // !! Error Test
 
     })
 
@@ -131,24 +131,24 @@ function buildHeroDom(targetDom, data) {
 }
 
 // !! Error Test
-function buildHeroProfile(targetDom,data,idHero) {
-  let htmlStr = `
-    <div class="hero-profile">
-      <div class="level-profile">${data.level}</div>
-      <img class="img-profile" src="${data.image}" alt="#">
+// function buildHeroProfile(targetDom,data,idHero) {
+//   let htmlStr = `
+//     <div class="hero-profile">
+//       <div class="level-profile">${data.level}</div>
+//       <img class="img-profile" src="${data.image}" alt="#">
 
-      <input type="text" id="name" name="hero[name]" placeholder="${data.name}"/>
-      <div id="job-wrapper"></div>
+//       <input type="text" id="name" name="hero[name]" placeholder="${data.name}"/>
+//       <div id="job-wrapper"></div>
 
-      <div class="status-profile">
-        <label for="hp-txt">HP</label>
-        <div class="hp-profile">${data.hp}</div>
-        <label for="mp-txt">MP</label>
-        <div class="mp-profile">${data.mp}</div>
-      </div>
-    </div>
-    `
-    if (idHero.id == data.id) {
-      targetDom.insertAdjacentHTML('beforeend', htmlStr)
-    } else return
-}
+//       <div class="status-profile">
+//         <label for="hp-txt">HP</label>
+//         <div class="hp-profile">${data.hp}</div>
+//         <label for="mp-txt">MP</label>
+//         <div class="mp-profile">${data.mp}</div>
+//       </div>
+//     </div>
+//     `
+//     if (idHero.id == data.id) {
+//       targetDom.insertAdjacentHTML('beforeend', htmlStr)
+//     } else return
+// }
