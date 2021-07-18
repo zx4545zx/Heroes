@@ -7,9 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
   let formHero = document.querySelector("#form-hero")
   let btnSubmitHero = document.querySelector('#btn-submit-hero')
 
-  // let idHero = document.querySelector('.hero'); // !! Error Test
-  // let formWrapper = document.querySelector('.form-wrapper');
-
   if (listHeroesDom == null) { return }
   let heroUrl = process.env.API_URL + "/heroes"
   formHero.setAttribute("action", heroUrl);
@@ -21,11 +18,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }).then(resp => resp.json())
     .then(data => {
-      addHeaderTitleToHeroesList(headerHero) //Head HeroList
-      buildHeroDom(listHeroesDom, data) //Hero List
-
-      // idHero.onclick = createHero(formWrapper,data,idHero); // !! Error Test
-
+      addHeaderTitleToHeroesList(headerHero); //Head HeroList
+      buildHeroDom(listHeroesDom, data); //Hero List
+      callHeroShow(heroUrl);
     })
 
   // Get all available jobs from backend
@@ -44,9 +39,8 @@ document.addEventListener('DOMContentLoaded', function () {
       buildJobDropdown(jobWrapper, data)
     })
 
-    // Click Submit Button
+  // Click Submit Button
   btnSubmitHero.onclick = () => {
-    console.log('make POST request');
     createHero();
   }
 
@@ -68,11 +62,33 @@ document.addEventListener('DOMContentLoaded', function () {
         'Authorization': process.env.API_CREDENTIAL
       },
       body: formData,
-      mode:'cors'
+      mode: 'cors',
+      credentials: "include",
     }).then(resp => resp.json())
       .then(data => {
         insertNewHero(listHeroesDom, data)
       })
+  }
+
+  // show Hero Profile
+  function callHeroShow(url) {
+    let heroCall = document.querySelectorAll('.hero')
+    heroCall.forEach(callHero => {
+      callHero.addEventListener('click', function () {
+        let id = callHero.id
+        fetch(url + "/" + id, {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': process.env.API_CREDENTIAL
+          }
+        }).then(resp => resp.json())
+          .then(data => {
+            let htmlShowHeroDom = document.getElementById('hero-profile')
+            buildHeroProfile(htmlShowHeroDom, data)
+          })
+      })
+    })
   }
 
 })
@@ -118,8 +134,8 @@ function addHeaderTitleToHeroesList(targetDom) {
 function buildHeroDom(targetDom, data) {
   data.forEach(hero => {
     let htmlStr = `
-      <div id="${hero.id}" class="hero"}">
-        <a href="" class="hero-name">${hero.name}</a>
+    <div id="${hero.id}" class="hero"}">
+        <div class="hero-name">${hero.name}</div>
         <div>${hero.level}</div>
         <div>${hero.hp}</div>
         <div>${hero.mp}</div>
@@ -130,25 +146,27 @@ function buildHeroDom(targetDom, data) {
   })
 }
 
-// !! Error Test
-// function buildHeroProfile(targetDom,data,idHero) {
-//   let htmlStr = `
-//     <div class="hero-profile">
-//       <div class="level-profile">${data.level}</div>
-//       <img class="img-profile" src="${data.image}" alt="#">
-
-//       <input type="text" id="name" name="hero[name]" placeholder="${data.name}"/>
-//       <div id="job-wrapper"></div>
-
-//       <div class="status-profile">
-//         <label for="hp-txt">HP</label>
-//         <div class="hp-profile">${data.hp}</div>
-//         <label for="mp-txt">MP</label>
-//         <div class="mp-profile">${data.mp}</div>
-//       </div>
-//     </div>
-//     `
-//     if (idHero.id == data.id) {
-//       targetDom.insertAdjacentHTML('beforeend', htmlStr)
-//     } else return
-// }
+// Show Hero Profile
+function buildHeroProfile(targetDom, data) {
+  targetDom.textContent = '';
+  let urlImage = data.image_thumbnail_url;
+  let htmlStr = `
+    <div id="hero-profile">
+      <div class="level-profile">Level ${data.level}</div>
+      <img src="${urlImage.replace(`http://localhost:3002`, `${process.env.API_URL}`)}" alt="#" />
+        <div>${data.name}</div>
+        <div>${data.job}</div>
+      <div class="status-profile">
+        <label for="hp-txt">HP</label>
+        <div class="hp-profile">${data.hp}</div>
+        <label for="mp-txt">MP</label>
+        <div class="mp-profile">${data.mp}</div>
+      </div>
+      <div class="btn-update-delete">
+        <button class="btn-update">update</button>
+        <button class="btn-delete">delete</button>
+      </div>
+    </div>
+    `
+  targetDom.insertAdjacentHTML('beforeend', htmlStr)
+}
