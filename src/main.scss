@@ -7,6 +7,7 @@ main {
   display: flex;
   gap: 0.5em;
   padding: 0.5rem;
+  justify-content: center;
 }
 
 .header-hero-list {
@@ -58,7 +59,7 @@ hr {
 
   .field {
     display: flex;
-    margin-bottom: 0.5rem;   
+    margin-bottom: 0.5rem;
     align-items: center;
   }
   label {
