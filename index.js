@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
   let formHero = document.querySelector("#form-hero")
   let btnSubmitHero = document.querySelector('#btn-submit-hero')
 
-  
+  let idHero = document.querySelector('.hero'); // !! Error Test
+  let formWrapper = document.querySelector('.form-wrapper');
 
   if (listHeroesDom == null) { return }
   let heroUrl = process.env.API_URL + "/heroes"
@@ -22,8 +23,9 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(data => {
       addHeaderTitleToHeroesList(headerHero) //Head HeroList
       buildHeroDom(listHeroesDom, data) //Hero List
-      // let xxx = document.querySelectorAll('.hero');
-      // console.log(xxx);
+
+      idHero.onclick = createHero(formWrapper,data,idHero); // !! Error Test
+
     })
 
   // Get all available jobs from backend
@@ -42,17 +44,17 @@ document.addEventListener('DOMContentLoaded', function () {
       buildJobDropdown(jobWrapper, data)
     })
 
+    // Click Submit Button
   btnSubmitHero.onclick = () => {
     console.log('make POST request');
     createHero();
   }
 
+  // Create Hero
   function createHero() {
     let name = formHero.querySelector('#name').value;
     let job = formHero.querySelector('#job').value;
     let image = formHero.querySelector('#image').files[0];
-    // console.log(image);
-    // return
 
     let formData = new FormData()
     formData.append('hero[name]', name);
@@ -72,8 +74,10 @@ document.addEventListener('DOMContentLoaded', function () {
         insertNewHero(listHeroesDom, data)
       })
   }
+
 })
 
+// Add new Hero to List
 function insertNewHero(heroList, hero) {
   let htmlStr = `
       <div id="${hero.id}" class="hero"}">
@@ -110,7 +114,7 @@ function addHeaderTitleToHeroesList(targetDom) {
   `)
 }
 
-// Hero List
+// Show Hero List
 function buildHeroDom(targetDom, data) {
   data.forEach(hero => {
     let htmlStr = `
@@ -124,4 +128,27 @@ function buildHeroDom(targetDom, data) {
     `
     targetDom.insertAdjacentHTML('beforeend', htmlStr)
   })
+}
+
+// !! Error Test
+function buildHeroProfile(targetDom,data,idHero) {
+  let htmlStr = `
+    <div class="hero-profile">
+      <div class="level-profile">${data.level}</div>
+      <img class="img-profile" src="${data.image}" alt="#">
+
+      <input type="text" id="name" name="hero[name]" placeholder="${data.name}"/>
+      <div id="job-wrapper"></div>
+
+      <div class="status-profile">
+        <label for="hp-txt">HP</label>
+        <div class="hp-profile">${data.hp}</div>
+        <label for="mp-txt">MP</label>
+        <div class="mp-profile">${data.mp}</div>
+      </div>
+    </div>
+    `
+    if (idHero.id == data.id) {
+      targetDom.insertAdjacentHTML('beforeend', htmlStr)
+    } else return
 }
