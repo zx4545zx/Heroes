@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
     createHero();
   }
 
-  // Create Hero
   function createHero() {
     let name = formHero.querySelector('#name').value;
     let job = formHero.querySelector('#job').value;
