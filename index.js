@@ -18,9 +18,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }).then(resp => resp.json())
     .then(data => {
-      addHeaderTitleToHeroesList(headerHero); //Head HeroList
-      buildHeroDom(listHeroesDom, data); //Hero List
-      callHeroShow(heroUrl);
+      addHeaderTitleToHeroesList(headerHero)
+      buildHeroDom(listHeroesDom, data);
+      showHeroProfile(heroUrl);
     })
 
   // Get all available jobs from backend
@@ -61,22 +61,21 @@ document.addEventListener('DOMContentLoaded', function () {
       headers: {
         'Authorization': process.env.API_CREDENTIAL
       },
-      body: formData,
-      mode: 'cors',
-      credentials: "include",
+      body: formData
     }).then(resp => resp.json())
       .then(data => {
         insertNewHero(listHeroesDom, data)
       })
   }
 
-  // show Hero Profile
-  function callHeroShow(url) {
-    let heroCall = document.querySelectorAll('.hero')
-    heroCall.forEach(callHero => {
-      callHero.addEventListener('click', function () {
-        let id = callHero.id
-        fetch(url + "/" + id, {
+  function showHeroProfile(url) {
+    let heroes = document.querySelectorAll('.hero')
+    heroes.forEach(hero => {
+      hero.addEventListener('click', function () {
+        let id = hero.id
+        let heroUrl = url + "/" + id
+
+        fetch(heroUrl, {
           method: "GET",
           headers: {
             'Content-Type': 'application/json',
