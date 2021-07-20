@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
       showHeroProfile(heroUrl);
     })
 
-  // Get all available jobs from backend
   let heroJobUrl = process.env.API_URL + "/hero_jobs"
   fetch(heroJobUrl, {
     method: "GET",
@@ -33,13 +32,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }).then(resp => resp.json())
     .then(data => {
-
       let jobWrapper = document.getElementById('job-wrapper')
       if (jobWrapper == null) { return }
       buildJobDropdown(jobWrapper, data)
     })
 
-  // Click Submit Button
   btnSubmitHero.onclick = () => {
     createHero();
   }
@@ -91,7 +88,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 })
 
-// Add new Hero to List
 function insertNewHero(heroList, hero) {
   let htmlStr = `
       <div id="${hero.id}" class="hero"}">
@@ -105,7 +101,6 @@ function insertNewHero(heroList, hero) {
   heroList.insertAdjacentHTML('afterbegin', htmlStr)
 }
 
-// Hero Job Dropdown
 function buildJobDropdown(targetDom, data) {
   targetDom.insertAdjacentHTML('afterbegin', `
     <select id="job" name="hero[job]">
@@ -115,7 +110,6 @@ function buildJobDropdown(targetDom, data) {
   `)
 }
 
-// Head HeroList
 function addHeaderTitleToHeroesList(targetDom) {
   targetDom.insertAdjacentHTML('afterend', `
     <div class="hero-header">
@@ -128,7 +122,6 @@ function addHeaderTitleToHeroesList(targetDom) {
   `)
 }
 
-// Show Hero List
 function buildHeroDom(targetDom, data) {
   data.forEach(hero => {
     let htmlStr = `
@@ -144,7 +137,6 @@ function buildHeroDom(targetDom, data) {
   })
 }
 
-// Show Hero Profile
 function buildHeroProfile(targetDom, data) {
   targetDom.textContent = '';
   let urlImage = data.image_thumbnail_url;
