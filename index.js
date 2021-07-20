@@ -60,11 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
       headers: {
         'Authorization': process.env.API_CREDENTIAL
       },
-<<<<<<< Updated upstream
       body: formData
-=======
-      body: formData,
->>>>>>> Stashed changes
     }).then(resp => resp.json())
       .then(data => {
         insertNewHero(listHeroesDom, data)
