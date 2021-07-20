@@ -62,8 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
         'Authorization': process.env.API_CREDENTIAL
       },
       body: formData,
-      mode: 'cors',
-      credentials: "include",
     }).then(resp => resp.json())
       .then(data => {
         insertNewHero(listHeroesDom, data)
