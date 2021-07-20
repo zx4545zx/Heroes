@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }).then(resp => resp.json())
     .then(data => {
-      addHeaderTitleToHeroesList(headerHero);
+      addHeaderTitleToHeroesList(headerHero)
       buildHeroDom(listHeroesDom, data);
       showHeroProfile(heroUrl);
     })
@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }).then(resp => resp.json())
     .then(data => {
-
       let jobWrapper = document.getElementById('job-wrapper')
       if (jobWrapper == null) { return }
       buildJobDropdown(jobWrapper, data)
@@ -58,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
       headers: {
         'Authorization': process.env.API_CREDENTIAL
       },
-      body: formData,
+      body: formData
     }).then(resp => resp.json())
       .then(data => {
         insertNewHero(listHeroesDom, data)
@@ -86,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
     })
   }
 
-  // Delete Hero Profile
   function deleteHero(url, data) {
     let delHero = document.querySelector('.btn-delete')
     delHero.addEventListener('click', function () {
