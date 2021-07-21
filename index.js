@@ -88,17 +88,23 @@ document.addEventListener('DOMContentLoaded', function () {
   function assignEventForDeleteBtn(url, data) {
     let btnDelete = document.querySelector('.btn-delete')
     btnDelete.addEventListener('click', function () {
-      let id = data.id
-      fetch(url + "/" + id, {
-        method: "DELETE",
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': process.env.API_CREDENTIAL
-        },
-      }).then(resp => resp.json())
-        .then(data => {
-          console.log(data);
-        })
+
+      if (confirm("Press a button!")) {
+        console.log("ok");
+
+        let id = data.id
+        fetch(url + "/" + id, {
+          method: "DELETE",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': process.env.API_CREDENTIAL
+          },
+        }).then(resp => resp.json())
+          .then(data => {
+            console.log(data);
+          })
+
+      } else console.log("cancel");
     })
   }
 
