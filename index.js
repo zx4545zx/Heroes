@@ -86,8 +86,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function assignEventForDeleteBtn(url, data) {
-    let delHero = document.querySelector('.btn-delete')
-    delHero.addEventListener('click', function () {
+    let btnDelete = document.querySelector('.btn-delete')
+    btnDelete.addEventListener('click', function () {
       let id = data.id
       fetch(url + "/" + id, {
         method: "DELETE",
