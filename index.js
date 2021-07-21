@@ -79,13 +79,13 @@ document.addEventListener('DOMContentLoaded', function () {
           .then(data => {
             let htmlShowHeroDom = document.getElementById('hero-profile')
             buildHeroProfile(htmlShowHeroDom, data)
-            deleteHero(url, data)
+            assignEventForDeleteBtn(url, data)
           })
       })
     })
   }
 
-  function deleteHero(url, data) {
+  function assignEventForDeleteBtn(url, data) {
     let delHero = document.querySelector('.btn-delete')
     delHero.addEventListener('click', function () {
       let id = data.id
