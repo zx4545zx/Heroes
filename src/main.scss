@@ -3,17 +3,28 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+html {
+  height: 100%;
+}
+
+body {
+  background: rgb(250,0,0);
+  background: linear-gradient(90deg, rgba(250,0,0,1) 0%, rgba(250,121,0,1) 16%, rgba(223,250,0,1) 33%, rgba(72,250,0,1) 50%, rgba(0,249,250,1) 62%, rgba(0,22,250,1) 79%, rgba(109,0,250,1) 100%);
+}
+
 main {
   display: flex;
   gap: 0.5em;
   padding: 0.5rem;
   justify-content: center;
+  padding-top: 50px;
 }
 
 .header-hero-list {
   width: 600px;
   padding: 0.5rem;
-  background-color: green;
+  background-color: #dcdcdc;
   border-radius: 10px;
 }
 
@@ -45,7 +56,7 @@ hr {
 }
 
 .hero:hover {
-  background-color: white;
+  background-color: rgb(121, 117, 117);
   border-radius: 50px;
 }
 
@@ -61,6 +72,7 @@ hr {
     display: flex;
     margin-bottom: 0.5rem;
     align-items: center;
+
   }
   label {
     width: 70px;
@@ -78,15 +90,19 @@ hr {
 }
 
 .hero-card {
-  width: 600px;
-  background-color: red;
+  width: 350px;
+  background-color: #dcdcdc;
   padding: 0.5rem;
   border-radius: 10px;
   text-align: center;
+  height: 370px;
 
   img {
     width: 200px;
+    height: 200px;
     border-radius: 50%;
+    background-repeat: no-repeat;
+    object-fit: cover;
   }
 }
 
@@ -106,11 +122,59 @@ hr {
   button {
     width: 60px;
     height: 30px;
+    border-radius: 15px;
+    border: none;
+    font-weight: bold;
+    color: white;
   }
 }
 
+.btn-update {
+  background-color: #fa2100;
+}
+
+.btn-delete {
+  background-color:#5406fb;
+}
+
 #form-hero {
-  background-color: blue;
+  background-color: #dcdcdc;
   padding: 0.5rem;
   border-radius: 10px;
+  height: 190px;
 }
+
+input[type ="submit"] {
+  width: 60px;
+  height: 30px;
+  border-radius: 15px;
+  border: none;
+  font-weight: bold;
+  color: white;
+  background-color:#0dc705;
+}
+
+.btn-submit {
+  display: flex;
+  justify-content: flex-end;
+}
+
+input[type="text"] {
+  width: 70%;
+  height: 20px;
+  border: none;
+  border-radius: 15px;
+}
+
+select {
+  border: none;
+  border-radius: 15px;
+  height: 20px;
+  width: 235px;
+}
+
+h2 {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
