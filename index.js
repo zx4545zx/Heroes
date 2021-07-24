@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let btnSubmitHero = document.querySelector('#btn-submit-hero')
 
   if (listHeroesDom == null) { return }
-  let heroUrl = process.env.API_URL + "/heroes"
+  let heroUrl = process.env.API_URL + "heroes"
   formHero.setAttribute("action", heroUrl);
   fetch(heroUrl, {
     method: "GET",
