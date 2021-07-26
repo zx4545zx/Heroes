@@ -2,13 +2,13 @@ require('dotenv').config()
 import './src/main.scss'
 
 document.addEventListener('DOMContentLoaded', function () {
-  let listHeroesDom = document.getElementById('list-heroes')
-  let headerHero = document.querySelector('h1')
-  let formHero = document.querySelector("#form-hero")
-  let btnSubmitHero = document.querySelector('#btn-submit-hero')
+  let listHeroesDom = document.getElementById('list-heroes');
+  let headerHero = document.querySelector('h1');
+  let formHero = document.querySelector("#form-hero");
+  let btnSubmitHero = document.querySelector('#btn-submit-hero');
 
   if (listHeroesDom == null) { return }
-  let heroUrl = process.env.API_URL + "/heroes"
+  let heroUrl = process.env.API_URL + "/heroes";
   formHero.setAttribute("action", heroUrl);
   fetch(heroUrl, {
     method: "GET",
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }).then(resp => resp.json())
     .then(data => {
-      addHeaderTitleToHeroesList(headerHero)
+      addHeaderTitleToHeroesList(headerHero);
       buildHeroDom(listHeroesDom, data);
       showHeroProfile(heroUrl);
     })
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(data => {
       let jobWrapper = document.getElementById('job-wrapper')
       if (jobWrapper == null) { return }
-      buildJobDropdown(jobWrapper, data)
+      buildJobDropdown(jobWrapper, data);
     })
 
   btnSubmitHero.onclick = () => {
@@ -46,12 +46,12 @@ document.addEventListener('DOMContentLoaded', function () {
     let job = formHero.querySelector('#job').value;
     let image = formHero.querySelector('#image').files[0];
 
-    let formData = new FormData()
+    let formData = new FormData();
     formData.append('hero[name]', name);
     formData.append('hero[job]', job);
     formData.append('hero[image]', image);
 
-    let createHeroUrl = heroUrl
+    let createHeroUrl = heroUrl;
     fetch(createHeroUrl, {
       method: "POST",
       headers: {
@@ -60,18 +60,16 @@ document.addEventListener('DOMContentLoaded', function () {
       body: formData
     }).then(resp => resp.json())
       .then(data => {
-        insertNewHero(listHeroesDom, data)
+        insertNewHero(listHeroesDom, data);
       })
   }
 
   function showHeroProfile(url) {
-    let heroes = document.querySelectorAll('.hero')
+    let heroes = document.querySelectorAll('.hero');
     heroes.forEach(hero => {
       hero.addEventListener('click', function () {
-        let id = hero.id
-        let heroUrl = url + "/" + id
-
-        fetch(heroUrl, {
+        let heroIdUrl = url + "/" + hero.id
+        fetch(heroIdUrl, {
           method: "GET",
           headers: {
             'Content-Type': 'application/json',
@@ -79,10 +77,34 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         }).then(resp => resp.json())
           .then(data => {
-            let htmlShowHeroDom = document.getElementById('hero-profile')
-            buildHeroProfile(htmlShowHeroDom, data)
+            let htmlShowHeroDom = document.getElementById('hero-profile');
+            buildHeroProfile(htmlShowHeroDom, data);
+            assignEventForDeleteBtn(url, data, htmlShowHeroDom);
           })
       })
+    })
+  }
+
+  function assignEventForDeleteBtn(url, data, card) {
+    let btnDelete = document.querySelector('.btn-delete');
+
+    btnDelete.addEventListener('click', function () {
+
+      if (confirm("Press a button!")) {
+        let id = data.id;
+        console.log(id);
+
+        fetch(url + "/" + id, {
+          method: "DELETE",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': process.env.API_CREDENTIAL
+          },
+        }).then(resp => resp.json());
+
+        card.innerHTML = ``;
+
+      } else console.log("cancel");
     })
   }
 
