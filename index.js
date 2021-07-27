@@ -81,6 +81,27 @@ document.addEventListener('DOMContentLoaded', function () {
             buildHeroProfile(htmlShowHeroDom, data);
             assignEventForDeleteBtn(url, data, htmlShowHeroDom);
             assignEventForUpdated();
+
+            let imgProfile = document.querySelector('.icon-upload-image');
+            let imgInput = document.querySelector('.input-img');
+            console.log(imgProfile);
+            imgProfile.addEventListener("change", function () {
+              console.log(imgInput.files[0]);
+
+              let heroUrl = process.env.API_URL + "/heroes/" + imgProfile.id;
+              fetch(heroUrl, {
+                method: "PATCH",
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': process.env.API_CREDENTIAL
+                },
+                body: JSON.stringify({ hero: { image_thumbnail_url: imgInput.files[0] } })
+              }).then(resp => resp.json())
+                .then(data => { 
+                  console.log(data);
+                });
+
+            });
           })
       })
     })
@@ -129,7 +150,7 @@ function assignEventForUpdatedOnBlur(heroInput, heroName) {
         'Content-Type': 'application/json',
         'Authorization': process.env.API_CREDENTIAL
       },
-      body: JSON.stringify({hero: {name: heroInput.value}})
+      body: JSON.stringify({ hero: { name: heroInput.value } })
     }).then(resp => resp.json())
       .then(data => {
         heroInput.remove();
@@ -193,9 +214,18 @@ function buildHeroProfile(targetDom, data) {
   let htmlStr = `
     <div id="hero-profile">
       <div class="level-profile">Level ${data.level}</div>
-      <img src="${urlImage.replace(`http://localhost:3002`, `${process.env.API_URL}`)}" alt="#" />
-        <div id="${data.id}" class="hero-profile-name">${data.name}</div>
-        <div>${data.job}</div>
+      <img class="img-hero-show"
+      src="${urlImage.replace(`http://localhost:3002`, `${process.env.API_URL}`)}" alt="#" />
+          <div id="${data.id}" class="icon-upload-image">
+            <label for="image">
+              <img class="img-hero"
+              src="https://image.flaticon.com/icons/png/512/3342/3342137.png"
+              alt="#">
+            </label>
+            <input class="input-img" type="file" id="image" name="hero[image]" />
+          </div>
+      <div id="${data.id}" class="hero-profile-name">${data.name}</div>
+      <div>${data.job}</div>
       <div class="status-profile">
         <label for="hp-txt">HP</label>
         <div class="hp-profile">${data.hp}</div>
