@@ -80,6 +80,14 @@ document.addEventListener('DOMContentLoaded', function () {
             let htmlShowHeroDom = document.getElementById('hero-profile');
             buildHeroProfile(htmlShowHeroDom, data);
             assignEventForDeleteBtn(url, data, htmlShowHeroDom);
+
+            let heroName = document.getElementById('hero-profile-name');
+            heroName.addEventListener('click', function () {
+              heroName.innerHTML = `<input type="text" id="hero-input-name">`
+              let heroInput = document.getElementById('hero-input-name')
+              heroInput.focus();
+              console.log(heroName);
+            })
           })
       })
     })
@@ -166,7 +174,7 @@ function buildHeroProfile(targetDom, data) {
     <div id="hero-profile">
       <div class="level-profile">Level ${data.level}</div>
       <img src="${urlImage.replace(`http://localhost:3002`, `${process.env.API_URL}`)}" alt="#" />
-        <div>${data.name}</div>
+        <div id="hero-profile-name">${data.name}</div>
         <div>${data.job}</div>
       <div class="status-profile">
         <label for="hp-txt">HP</label>
