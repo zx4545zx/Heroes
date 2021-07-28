@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let name = formHero.querySelector('#name').value;
     let job = formHero.querySelector('#job').value;
     let image = formHero.querySelector('#image').files[0];
+    console.log(image);
 
     let formData = new FormData();
     formData.append('hero[name]', name);
@@ -85,21 +86,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // !! Error
             let imgProfile = document.querySelector('.icon-upload-image');
-            let imgInput = document.querySelector('.input-img');
-            console.log(imgProfile);
+
             imgProfile.addEventListener("change", function () {
-              console.log(imgInput.files[0]);
+              console.log('hello');
+
+              let imgInput = imgProfile.querySelector('.input-img').files[0];
+              console.log(imgInput);
+
+              let formData = new FormData();
+              formData.append('hero[image]', imgInput);
 
               let heroUrl = process.env.API_URL + "/heroes/" + imgProfile.id;
               fetch(heroUrl, {
                 method: "PATCH",
                 headers: {
-                  'Content-Type': 'application/json',
                   'Authorization': process.env.API_CREDENTIAL
                 },
-                body: JSON.stringify({ hero: { image_thumbnail_url: imgInput.files[0] } })
+                body: formData
               }).then(resp => resp.json())
-                .then(data => { 
+                .then(data => {
                   console.log(data);
                 });
 
@@ -218,14 +223,10 @@ function buildHeroProfile(targetDom, data) {
       <div class="level-profile">Level ${data.level}</div>
       <img class="img-hero-show"
       src="${urlImage.replace(`http://localhost:3002`, `${process.env.API_URL}`)}" alt="#" />
-          <div id="${data.id}" class="icon-upload-image">
-            
+          <div id="${data.id}" class="icon-upload-image">            
             <label for="image">
-              <img class="img-hero"
-              src="https://image.flaticon.com/icons/png/512/3342/3342137.png"
-              alt="#">
+              <img class="img-hero" src="https://image.flaticon.com/icons/png/512/3342/3342137.png" alt="#">
             </label>
-
             <input class="input-img" type="file" id="image" name="hero[image]" />
           </div>
       <div id="${data.id}" class="hero-profile-name">${data.name}</div>
