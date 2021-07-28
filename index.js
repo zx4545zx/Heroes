@@ -83,32 +83,8 @@ document.addEventListener('DOMContentLoaded', function () {
             buildHeroProfile(htmlShowHeroDom, data);
             assignEventForDeleteBtn(url, data, htmlShowHeroDom);
             assignEventForUpdated();
+            assignEventForUpdatedImage();
 
-            // !! Error
-            let imgProfile = document.querySelector('.icon-upload-image');
-
-            imgProfile.addEventListener("change", function () {
-              console.log('hello');
-
-              let imgInput = imgProfile.querySelector('.input-img').files[0];
-              console.log(imgInput);
-
-              let formData = new FormData();
-              formData.append('hero[image]', imgInput);
-
-              let heroUrl = process.env.API_URL + "/heroes/" + imgProfile.id;
-              fetch(heroUrl, {
-                method: "PATCH",
-                headers: {
-                  'Authorization': process.env.API_CREDENTIAL
-                },
-                body: formData
-              }).then(resp => resp.json())
-                .then(data => {
-                  console.log(data);
-                });
-
-            });
           })
       })
     })
@@ -137,6 +113,32 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 })
+
+function assignEventForUpdatedImage() {
+  let imgProfile = document.querySelector('.icon-upload-image');
+  imgProfile.addEventListener("change", function () {
+    console.log('hello');
+
+    let imgInput = imgProfile.querySelector('.input-img').files[0];
+    console.log(imgInput);
+
+    let formData = new FormData();
+    formData.append('hero[image]', imgInput);
+
+    let heroUrl = process.env.API_URL + "/heroes/" + imgProfile.id;
+    fetch(heroUrl, {
+      method: "PATCH",
+      headers: {
+        'Authorization': process.env.API_CREDENTIAL
+      },
+      body: formData
+    }).then(resp => resp.json())
+      .then(data => {
+        console.log(data);
+        // change on Profile
+      });
+  });
+}
 
 function assignEventForUpdated() {
   let heroName = document.querySelector('.hero-profile-name');
