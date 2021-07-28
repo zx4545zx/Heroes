@@ -1,5 +1,6 @@
 require('dotenv').config()
 import './src/main.scss'
+import defaultsPhoto from "/assets/00.png"
 
 document.addEventListener('DOMContentLoaded', function () {
   let listHeroesDom = document.getElementById('list-heroes');
@@ -82,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
             assignEventForDeleteBtn(url, data, htmlShowHeroDom);
             assignEventForUpdated();
 
+            // !! Error
             let imgProfile = document.querySelector('.icon-upload-image');
             let imgInput = document.querySelector('.input-img');
             console.log(imgProfile);
@@ -210,18 +212,20 @@ function buildHeroDom(targetDom, data) {
 
 function buildHeroProfile(targetDom, data) {
   targetDom.textContent = '';
-  let urlImage = data.image_thumbnail_url;
+  let urlImage = data.image_thumbnail_url || defaultsPhoto;
   let htmlStr = `
     <div id="hero-profile">
       <div class="level-profile">Level ${data.level}</div>
       <img class="img-hero-show"
       src="${urlImage.replace(`http://localhost:3002`, `${process.env.API_URL}`)}" alt="#" />
           <div id="${data.id}" class="icon-upload-image">
+            
             <label for="image">
               <img class="img-hero"
               src="https://image.flaticon.com/icons/png/512/3342/3342137.png"
               alt="#">
             </label>
+
             <input class="input-img" type="file" id="image" name="hero[image]" />
           </div>
       <div id="${data.id}" class="hero-profile-name">${data.name}</div>
