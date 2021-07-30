@@ -1,5 +1,6 @@
 require('dotenv').config()
 import './src/main.scss'
+import defaultsPhoto from "/assets/00.png"
 
 document.addEventListener('DOMContentLoaded', function () {
   let listHeroesDom = document.getElementById('list-heroes');
@@ -45,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let name = formHero.querySelector('#name').value;
     let job = formHero.querySelector('#job').value;
     let image = formHero.querySelector('#image').files[0];
+    console.log(image);
 
     let formData = new FormData();
     formData.append('hero[name]', name);
@@ -81,6 +83,8 @@ document.addEventListener('DOMContentLoaded', function () {
             buildHeroProfile(htmlShowHeroDom, data);
             assignEventForDeleteBtn(url, data, htmlShowHeroDom);
             assignEventForUpdated();
+            assignEventForUpdatedImage();
+
           })
       })
     })
@@ -109,6 +113,32 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 })
+
+function assignEventForUpdatedImage() {
+  let imgProfile = document.querySelector('.icon-upload-image');
+  imgProfile.addEventListener("change", function () {
+    console.log('hello');
+
+    let imgInput = imgProfile.querySelector('.input-img').files[0];
+    console.log(imgInput);
+
+    let formData = new FormData();
+    formData.append('hero[image]', imgInput);
+
+    let heroUrl = process.env.API_URL + "/heroes/" + imgProfile.id;
+    fetch(heroUrl, {
+      method: "PATCH",
+      headers: {
+        'Authorization': process.env.API_CREDENTIAL
+      },
+      body: formData
+    }).then(resp => resp.json())
+      .then(data => {
+        console.log(data);
+        // change on Profile
+      });
+  });
+}
 
 function assignEventForUpdated() {
   let heroName = document.querySelector('.hero-profile-name');
@@ -196,13 +226,20 @@ function buildHeroDom(targetDom, data) {
 
 function buildHeroProfile(targetDom, data) {
   targetDom.textContent = '';
-  let urlImage = data.image_thumbnail_url;
+  let urlImage = data.image_thumbnail_url || defaultsPhoto;
   let htmlStr = `
     <div id="hero-profile">
       <div class="level-profile">Level ${data.level}</div>
-      <img src="${urlImage.replace(`http://localhost:3002`, `${process.env.API_URL}`)}" alt="#" />
-        <div id="${data.id}" class="hero-profile-name">${data.name}</div>
-        <div>${data.job}</div>
+      <img class="img-hero-show"
+      src="${urlImage.replace(`http://localhost:3002`, `${process.env.API_URL}`)}" alt="#" />
+          <div id="${data.id}" class="icon-upload-image">            
+            <label for="image">
+              <img class="img-hero" src="https://image.flaticon.com/icons/png/512/3342/3342137.png" alt="#">
+            </label>
+            <input class="input-img" type="file" id="image" name="hero[image]" />
+          </div>
+      <div id="${data.id}" class="hero-profile-name">${data.name}</div>
+      <div>${data.job}</div>
       <div class="status-profile">
         <label for="hp-txt">HP</label>
         <div class="hp-profile">${data.hp}</div>
