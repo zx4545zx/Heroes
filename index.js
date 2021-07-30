@@ -129,13 +129,20 @@ function assignEventForUpdatedOnBlur(heroInput, heroName) {
         'Content-Type': 'application/json',
         'Authorization': process.env.API_CREDENTIAL
       },
-      body: JSON.stringify({hero: {name: heroInput.value}})
+      body: JSON.stringify({ hero: { name: heroInput.value } })
     }).then(resp => resp.json())
       .then(data => {
         heroInput.remove();
         heroName.textContent = data.name;
+        updateHeroNameList(data);
       })
   }
+}
+
+function updateHeroNameList(data) {
+  let heroNameList = document.querySelector('.hero-name');
+  heroNameList.textContent = "";
+  heroNameList.textContent = data.name;
 }
 
 function insertNewHero(heroList, hero) {
