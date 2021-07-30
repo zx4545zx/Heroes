@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let htmlShowHeroDom = document.getElementById('hero-profile');
             buildHeroProfile(htmlShowHeroDom, data);
             assignEventForDeleteBtn(url, data, htmlShowHeroDom);
+            assignEventForUpdated();
           })
       })
     })
@@ -92,7 +93,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (confirm("Press a button!")) {
         let id = data.id;
-        console.log(id);
 
         fetch(url + "/" + id, {
           method: "DELETE",
@@ -109,6 +109,41 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 })
+
+function assignEventForUpdated() {
+  let heroName = document.querySelector('.hero-profile-name');
+  heroName.addEventListener('click', function () {
+    heroName.innerHTML = `<input type="text" id="hero-input-name" name=hero[name]">`;
+    let heroInput = document.getElementById('hero-input-name');
+    heroInput.focus();
+    assignEventForUpdatedOnBlur(heroInput, heroName);
+  })
+}
+
+function assignEventForUpdatedOnBlur(heroInput, heroName) {
+  heroInput.onblur = function () {
+    let heroUrl = process.env.API_URL + "/heroes/" + heroName.id;
+    fetch(heroUrl, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': process.env.API_CREDENTIAL
+      },
+      body: JSON.stringify({ hero: { name: heroInput.value } })
+    }).then(resp => resp.json())
+      .then(data => {
+        heroInput.remove();
+        heroName.textContent = data.name;
+        updateHeroNameList(data);
+      })
+  }
+}
+
+function updateHeroNameList(data) {
+  let heroNameList = document.querySelector('.hero-name');
+  heroNameList.textContent = "";
+  heroNameList.textContent = data.name;
+}
 
 function insertNewHero(heroList, hero) {
   let htmlStr = `
@@ -166,7 +201,7 @@ function buildHeroProfile(targetDom, data) {
     <div id="hero-profile">
       <div class="level-profile">Level ${data.level}</div>
       <img src="${urlImage.replace(`http://localhost:3002`, `${process.env.API_URL}`)}" alt="#" />
-        <div>${data.name}</div>
+        <div id="${data.id}" class="hero-profile-name">${data.name}</div>
         <div>${data.job}</div>
       <div class="status-profile">
         <label for="hp-txt">HP</label>
